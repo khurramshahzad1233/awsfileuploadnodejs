@@ -65,22 +65,22 @@ export const getfilecontroller=catchasyncerror(async(req,res,next)=>{
 
 
 export const uploadobjectcontroller=catchasyncerror(async(req,res,next)=>{
-    const userid=req.user.id;
+    // const userid=req.user.id;
    const fileUrls=req.files.map((file)=>file.location);
-   const user=await userdata.findById(req.user.id);
-   if(!user){
-    return next(new Errorhandler("Please login first to continue", 400))
-   };
+//    const user=await userdata.findById(req.user.id);
+//    if(!user){
+//     return next(new Errorhandler("Please login first to continue", 400))
+//    };
 
  
     try {
         for(let i=0; i<fileUrls.length; i++){
             const video=await videodata.create({
                 videourl:fileUrls[i],
-                userid:userid,
+                // userid:userid,
             })
-            user.videos.push(video._id);
-            await user.save()
+            // user.videos.push(video._id);
+            // await user.save()
             
         }
         

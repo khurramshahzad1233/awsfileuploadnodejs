@@ -5,7 +5,7 @@ import {authuser} from "../middleware/auth.js"
 const router=express.Router()
 
 router.route("/aws/getobject").get(getfilecontroller)
-router.route("/aws/uploadfile").post(authuser,upload.array("files"), uploadobjectcontroller)
+router.route("/aws/uploadfile").post(upload.array("files"), uploadobjectcontroller)
 router.route("/aws/object/me").get(authuser,getobjectofusercontroller)
 
 

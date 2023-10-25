@@ -17,8 +17,9 @@ const upload=multer({
             cb(null, {fieldName:file.fieldname});
         },
         key:function(req,file,cb){
-            const userid=req.user.id
-            cb(null,`uploads/${userid}/`+Date.now().toString()+file.originalname)
+            // const userid=req.user.id
+            // cb(null,`uploads/${userid}/`+Date.now().toString()+file.originalname)
+            cb(null,`uploads/`+Date.now().toString()+file.originalname)
         }
     })
 })
