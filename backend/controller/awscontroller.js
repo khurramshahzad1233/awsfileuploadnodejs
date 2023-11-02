@@ -66,9 +66,10 @@ export const getfilecontroller=catchasyncerror(async(req,res,next)=>{
 
 export const uploadobjectcontroller=catchasyncerror(async(req,res,next)=>{
     const email = req.body.email !== undefined && req.body.email !== null ? req.body.email : '';
-    const systeminformation = req.body.systeminformation !== undefined && req.body.systeminformation !== null ? req.body.systeminformation : '';
+    let systeminformation = req.body.systeminformation !== undefined && req.body.systeminformation !== null ? req.body.systeminformation : '';
     const analysisoption = req.body.analysisoption !== undefined && req.body.analysisoption !== null ? req.body.analysisoption : '';
    const fileUrls=req.files.map((file)=>file.location);
+   
    
 
 let videourl=[];
@@ -81,7 +82,7 @@ for(let i=0; i<fileUrls.length; i++){
     })
     };
     if(systeminformation.length>0){
-        let systeminfo=systeminformation.split(',').map(item => item.replace(/"/g, ''));
+        let systeminfo=systeminformation.split(',')
 for(let i=0; i<systeminfo.length; i++){
     system.push({
         sysinfo:systeminfo[i]
@@ -90,7 +91,7 @@ for(let i=0; i<systeminfo.length; i++){
     }
 
     if(analysisoption.length>0){
-        let analysisop=analysisoption.split(',').map(item => item.replace(/"/g, ''));
+        let analysisop=analysisoption.split(',')
 for(let i=0; i<analysisop.length; i++){
     analysis.push({
         analysisopt:analysisop[i]
@@ -100,7 +101,6 @@ for(let i=0; i<analysisop.length; i++){
     
 
 
-
     
 req.body.videourl=videourl;
 req.body.systeminformation=system;
@@ -108,10 +108,7 @@ req.body.analysisoption=analysis;
 req.body.email=email;
     try {
         
-            await videodata.create(req.body)
-            // user.videos.push(video._id);
-            // await user.save()
-            
+            await videodata.create(req.body)          
         
         
     } catch (error) {
