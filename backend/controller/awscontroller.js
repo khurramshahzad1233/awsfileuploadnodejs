@@ -65,24 +65,54 @@ export const getfilecontroller=catchasyncerror(async(req,res,next)=>{
 
 
 export const uploadobjectcontroller=catchasyncerror(async(req,res,next)=>{
-    // const userid=req.user.id;
+    const email = req.body.email !== undefined && req.body.email !== null ? req.body.email : '';
+    const systeminformation = req.body.systeminformation !== undefined && req.body.systeminformation !== null ? req.body.systeminformation : '';
+    const analysisoption = req.body.analysisoption !== undefined && req.body.analysisoption !== null ? req.body.analysisoption : '';
    const fileUrls=req.files.map((file)=>file.location);
-//    const user=await userdata.findById(req.user.id);
-//    if(!user){
-//     return next(new Errorhandler("Please login first to continue", 400))
-//    };
+   
 
+let videourl=[];
+let system=[];
+let analysis=[]
  
+for(let i=0; i<fileUrls.length; i++){
+    videourl.push({
+        url:fileUrls[i]
+    })
+    };
+    if(systeminformation.length>0){
+        let systeminfo=systeminformation.split(',').map(item => item.replace(/"/g, ''));
+for(let i=0; i<systeminfo.length; i++){
+    system.push({
+        sysinfo:systeminfo[i]
+    })
+}
+    }
+
+    if(analysisoption.length>0){
+        let analysisop=analysisoption.split(',').map(item => item.replace(/"/g, ''));
+for(let i=0; i<analysisop.length; i++){
+    analysis.push({
+        analysisopt:analysisop[i]
+    })
+}
+    }
+    
+
+
+
+    
+req.body.videourl=videourl;
+req.body.systeminformation=system;
+req.body.analysisoption=analysis;
+req.body.email=email;
     try {
-        for(let i=0; i<fileUrls.length; i++){
-            const video=await videodata.create({
-                videourl:fileUrls[i],
-                // userid:userid,
-            })
+        
+            await videodata.create(req.body)
             // user.videos.push(video._id);
             // await user.save()
             
-        }
+        
         
     } catch (error) {
         return res.status(400).json({
