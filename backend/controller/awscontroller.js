@@ -81,6 +81,7 @@ for(let i=0; i<fileUrls.length; i++){
         url:fileUrls[i]
     })
     };
+    console.log(systeminformation)
     if(systeminformation.length>0){
         let systeminfo=systeminformation.split(',')
 for(let i=0; i<systeminfo.length; i++){
