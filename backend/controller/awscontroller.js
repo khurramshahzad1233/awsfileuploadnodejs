@@ -26,9 +26,15 @@ export const getfilecontroller=catchasyncerror(async(req,res,next)=>{
             message:"no files found"
         })
     }
-    const command=[]
+    const commanddata=[]
     for(let i=0; i<videourldata.length; i++){
-        command.push(videourldata[i].videourl)
+        commanddata.push(videourldata[i].videourl)
+    }
+
+    let command=[]
+    let command1=commanddata.flat(1);
+    for(let i=0; i<command1.length; i++){
+        command.push(command1[i].url)
     }
 
     const commandurl=[];
@@ -43,11 +49,11 @@ export const getfilecontroller=catchasyncerror(async(req,res,next)=>{
     const urlArray=[];
     for(let i=0; i<commandurl.length; i++){
         const keyparts=commandurl[i].split("/");
-        const userid=keyparts[4];
-        const filename=keyparts[5];
+        // const userid=keyparts[3];
+        const filename=keyparts[4];
         const command=new GetObjectCommand({
             Bucket:process.env.bucket,
-            Key: `uploads/${userid}/${filename}`,
+            Key: `uploads/${filename}`,
 
         });
         const url = await getSignedUrl(client, command);
